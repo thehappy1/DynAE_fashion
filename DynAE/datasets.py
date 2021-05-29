@@ -243,6 +243,16 @@ def load_fashion_mnist():
     print('Fashion MNIST samples', x.shape)
     return x, y
 
+def load_fpi():
+    from fpidataset import Fpidataset
+    dataset = Fpidataset()
+    (x_train, y_train), (x_test, y_test) = dataset.load_data()
+    x = np.concatenate((x_train, x_test))
+    y = np.concatenate((y_train, y_test))
+    x = x.reshape([-1, 80, 60, 3]) / 255.0
+    print("Fashion Product Images (Small) samples", x.shape)
+    return x, y
+
 def load_pendigits(data_path='/content/drive/My Drive/Colab/DAE/data/pendigits'):
     import os
     if not os.path.exists(data_path + '/pendigits.tra'):
@@ -407,6 +417,8 @@ def load_data_conv(dataset, datapath):
         return load_coil_100_color(datapath)
     elif dataset == 'mice-protein':
         return load_mice_protein(datapath)
+    elif dataset == 'fpi':
+        return load_fpi()
     else:
         raise ValueError('Not defined for loading %s' % dataset)
 
